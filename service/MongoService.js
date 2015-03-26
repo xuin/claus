@@ -1,14 +1,27 @@
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://172.16.230.184:30000/logdb');
+mongoose.connect('mongodb://logdb:123456@172.16.230.184:30000/logdb');
+//var db = mongoose.createConnection('mongodb://logdb:123456@172.16.230.184:30000/logdb');
 
-var Schema = mongoose.Schema ,
-    ObjectId = Schema.ObjectId;
+//mongoose.connect('mongodb://127.0.0.1:27017/logdb');
+
+var Schema = mongoose.Schema;
 
 var logSchema = new Schema({
-	lavel : String ,
-	message : String
+	level:String,
+	loggerName:String,
+	message:String,
+	source:{},
+	marker:String,
+	threadName:String,
+	millis:Number,
+	date:Date,
+	thrown:String,
+	contextMap:{},
+	contextStack:[]
 });
 
-exports.find=function(call){
-	mongoose.model('trident',logSchema).find({},call);
+var trident = mongoose.model('Trident',logSchema,'trident');
+
+exports.find = function(criteria,skip,limit,call){
+	trident.find(criteria).skip(skip).limit(limit).exec(call);
 };

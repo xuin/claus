@@ -18,11 +18,114 @@
     <![endif]-->
   </head>
   <body>
-    <h1>你好，世界！</h1>
-    <%= content %>
+    <h1>你好，世界！<%=dateFormat()%></h1>
+  <form action="/" method="post" class="form-horizontal">
+    <div class="row">
+      <div class="form-group form-group-sm col-sm-4">
+        <label class="col-sm-3 control-label" for="formGroupInputSmall">日志级别</label>
+        <div class="col-sm-9">
+          <label class="checkbox-inline">
+            <input type="checkbox" id="inlineCheckbox1" value="DEBUG" name="level"/>DEBUG
+          </label>
+          <label class="checkbox-inline">
+            <input type="checkbox" id="inlineCheckbox2" value="INFO" name="level">INFO
+          </label>
+          <label class="checkbox-inline">
+            <input type="checkbox" id="inlineCheckbox3" value="WARN" name="level">WARN
+          </label>
+          <label class="checkbox-inline">
+            <input type="checkbox" id="inlineCheckbox3" value="ERROR" name="level">ERROR
+          </label>
+          <label class="checkbox-inline">
+            <input type="checkbox" id="inlineCheckbox4" value="FATAL" name="level">FATAL
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group form-group-sm col-sm-4">
+        <label class="col-sm-3 control-label" for="formGroupInputSmall">关键字</label>
+        <div class="col-sm-9">
+          <input class="form-control" type="text" name="keyword" id="formGroupInputSmall" placeholder="关键字">
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary col-sm-1">搜索</button>
+    </div>
+  </form>
+   <div class="panel panel-default">
+      <!-- Default panel contents -->
+      <div class="panel-heading">Panel heading</div>
+      <!-- Table -->
+      <table class="table">
+        <thead>
+          <tr>
+            <th>_id</th>
+            <th>level</th>
+            <th>loggerName</th>
+            <th>message</th>
+            <th>source</th>
+            <th>marker</th>
+            <th>threadName</th>
+            <th>millis</th>
+            <th>date</th>
+            <th>thorwn</th>
+            <th>contextMap</th>
+            <th>contextStack</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%  
+            function textCut(t) {
+                if(t.length>15){
+                  return t.substring(0,15)+'...';  
+                }
+                return t;
+                
+            }
+            for(var i=0;i<content.length;i++){ %>
+            <tr>
+              <th scope="row">
+                <span data-toggle="popover" data-trigger="focus"  data-content="And here's some amazing content. It's very engaging. Right?"><%=content[i].id%></span>
+              </th>
+              <td><%=content[i].level%></td>
+              <td><%=textCut(content[i].loggerName)%></td>
+              <td title="<%=content[i].message%>"><%=textCut(content[i].message)%></td>
+              <td><%=content[i].source%></td>
+              <td><%=content[i].marker%></td>
+              <td><%=content[i].threadName%></td>
+              <td><%=content[i].millis%></td>
+              <td><%=content[i].date%></td>
+              <td><%=content[i].thorwn%></td>
+              <td><%=content[i].contextMap%></td>
+              <td><%=content[i].contextStack%></td>
+            </tr>
+          <%}%>
+        </tbody>
+      </table>
+    </div>
+
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="/javascripts/jquery-1.11.1.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="/bootstrap/js/bootstrap.min.js"></script>
+       <script type="text/javascript">
+      $(function(){
+        /*
+        $('[data-toggle="popover"]').on('click',function(){
+          $(this).popover('toggle');  
+          return false;
+        });
+        $(document).on('click',function(){
+          $('[data-toggle="popover"]').popover('hide');
+          console.log(2);
+        });
+*/
+        $("input[type=checkbox]").on("click",function(){
+          $("form").submit();
+        });
+
+      });
+      
+    </script>
   </body>
 </html>
