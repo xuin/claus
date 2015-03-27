@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var moment = require('moment');
 
 var app = express();
 
@@ -35,8 +36,12 @@ app.use(function(req, res, next) {
 // error handlers
 
 
-app.locals.dateFormat = function(){
-  return "nihao";
+app.locals.dateFormat = function(obj,format){
+  if (format == undefined) {
+        format = 'YYYY-MM-DD HH:mm:ss';
+    }
+    var ret = moment(obj).format(format);
+    return ret == 'Invalid date' ? '0000-00-00 00:00:00' : ret;
 };
 
 // development error handler
