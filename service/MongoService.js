@@ -22,8 +22,24 @@ var LogSchema = new Schema({
 });
 
 var trident = mongoose.model('Trident',LogSchema,'trident');
-
 /*
+for(var i = 1 ;i<100;i++){
+	var l1jj = new trident({
+	level:'DEBUG',
+	loggerName:'com.logger'+i,
+	message:'错误消息'+i,
+	source:{},
+	marker:'smdx'+i,
+	threadName:'xom.askk.l'+i,
+	millis:19209918,
+	date:new Date(),
+	thrown:'aasdekljiuo'+i,
+	contextMap:{},
+	contextStack:[]
+});
+l1jj.save();
+}
+
 var l1jj = new trident({
 	level:'DEBUG',
 	loggerName:'com.logger',
@@ -42,11 +58,6 @@ l1jj.save();
 */
 
 
-trident.find({'message':new RegExp('错')}).exec(function(err,doc){
-	console.log(doc)
-});
-
-
 exports.find = function(criteria,skip,limit,call){
-	trident.find(criteria).skip(skip).limit(limit).exec(call);
+	trident.find(criteria).skip(skip).limit(limit).sort({date:'desc'}).exec(call);
 };

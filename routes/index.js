@@ -17,18 +17,22 @@ ejs.set('dateformat',function(obj,format){
 
 
 /* GET home page. */
-router.all('/', function(req, res, next) {
+router.get('/', function(req, res, next) {
+	mongoConnection.find({},0,10,function(err,doc){
+		res.render('index', {'content':doc});
+	});
+});
+
+router.post('/', function(req, res, next) {
 	var criteria = {};
-	var bdlevel =  typeof req.body.level == 'string'?[req.body.level]:req.body.level,
-		keyword = typeof req.body.keyword;
-
-	if(req.body.level){
-		criteria.level = {$in:bdlevel};
-		criteria.message = new RegExp(keyword);
+	
+	console.log(req.body.dataTime);
+	//criteria.level = {$in:bdlevel};
+	if(req.body.keyword){
+		criteria.message = new RegExp(req.body.keyword);
 	}
-
 	mongoConnection.find(criteria,0,50,function(err,doc){
-		res.render('index', {'content':doc,'criteria':criteria});
+		res.json(doc);
 	});
 });
 module.exports = router;
