@@ -53,7 +53,7 @@ router.post('/search', function(req, res, next) {
 	});
 });
 
-router.post('/choice', function(req, res, next) {
+router.post('/through', function(req, res, next) {
 	var criteria = {};
 
 	if(req.body.startDate){

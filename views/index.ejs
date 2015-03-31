@@ -21,10 +21,9 @@
   <body>
   <h1>你好，世界！<%=dateFormat()%></h1>
   <form action="/" method="post" class="form-horizontal">
-    <div class="row">
-      <div class="form-group form-group-sm col-sm-4">
-        <label class="col-sm-3 control-label" for="formGroupInputSmall">日志级别</label>
-        <div class="col-sm-9">
+      <div class="form-group form-group-sm row">
+        <label class="col-sm-2 control-label" for="formGroupInputSmall">日志级别</label>
+        <div class="col-sm-5">
           <label class="checkbox-inline">
             <input type="checkbox" id="inlineCheckbox1" value="DEBUG" name="level"/>DEBUG
           </label>
@@ -41,32 +40,23 @@
             <input type="checkbox" id="inlineCheckbox4" value="FATAL" name="level">FATAL
           </label>
         </div>
+     </div>
+    <div class="form-group form-group-sm row">
+      <label class="col-sm-2 control-label" for="formGroupInputSmall">时间</label>
+      <div class="col-sm-5">
+        <input type="text" name="daterange" value="01/01/2015 - 01/31/2015" class="form-control" />
       </div>
     </div>
-    <div class="row">
-      <div class="form-group form-group-sm col-sm-4">
-        <label class="col-sm-3 control-label" for="formGroupInputSmall">时间</label>
-        <div class="col-sm-9">
-          <input type="text" name="daterange" value="01/01/2015 - 01/31/2015" class="form-control" />
-        </div>
+    <div class="form-group form-group-sm row">
+      <label class="col-sm-2 control-label" for="formGroupInputSmall">关键字</label>
+      <div class="col-sm-5">
+        <input class="form-control" type="text" name="keyword" id="keyword" placeholder="关键字">
       </div>
-      
-    </div>
-    <div class="row">
-      <div class="form-group form-group-sm col-sm-4">
-        <label class="col-sm-3 control-label" for="formGroupInputSmall">关键字</label>
-        <div class="col-sm-9">
-          <input class="form-control" type="text" name="keyword" id="keyword" placeholder="关键字">
-        </div>
-      </div>
-      <button type="submit" class="btn btn-primary col-sm-1">搜索</button>
+      <button type="button" id="btn-search" class="btn btn-primary col-sm-1">搜索</button>
     </div>
   </form>
-    <ul id="logView">
-      <% for(var i=0;i<content.length;i++){ %>
-            <li data-time="<%=content[i].date.getTime()%>"><%=dateFormat(content[i].date,'YYYY-MM-DD HH:mm:ss.SSS')%> [<%=content[i].threadName%>] <%=content[i].level%> [<%=content[i].loggerName%>] - <%=content[i].message%></li>
-      <%}%>
-    </ul>
+  <ul id="logView">
+  </ul>
     <div>
       <a href="javascript:forward();">更多消息</a>
     </div>
@@ -77,6 +67,22 @@
     <script type="text/javascript" src="/daterangepicker/moment.min.js"></script>
     <script type="text/javascript" src="/daterangepicker/daterangepicker.js"></script>
     <script type="text/javascript">
+
+      Date.prototype.Format = function (fmt) { //author: meizz 
+          var o = {
+              "M+": this.getMonth() + 1, //月份 
+              "d+": this.getDate(), //日 
+              "h+": this.getHours(), //小时 
+              "m+": this.getMinutes(), //分 
+              "s+": this.getSeconds(), //秒 
+              "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+              "S": this.getMilliseconds() //毫秒 
+          };
+          if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+          for (var k in o)
+          if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+          return fmt;
+      }
 
       function forward(){
         var dataTime = $("#logView li:last").attr("data-time");
@@ -90,7 +96,26 @@
         });
       }
 
+      function through(id,time){
+        $.post('/through',{'id':id,'time':time},function(data){
+          
+        });
+      }
+
       $(function(){
+
+        $('#btn-search').on('click',function(){
+          var param = {
+            'keyword':$("#keyword").val()
+          }
+
+          $.post('/search',param,function(data){
+            for(var i=0;i<data.length;i++){
+              $('#logView').append('<li onclick="through(\''+data[i]._id+'\',\''+data[i].date+'\')">'+data[i].message+'</li>');
+            }
+          });
+
+        });
         /*
         $('[data-toggle="popover"]').on('click',function(){
           $(this).popover('toggle');  
