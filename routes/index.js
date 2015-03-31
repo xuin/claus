@@ -18,9 +18,7 @@ ejs.set('dateformat',function(obj,format){
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-	mongoConnection.find({},0,10,function(err,doc){
-		res.render('index', {'content':doc});
-	});
+	res.render('index');
 });
 
 router.post('/', function(req, res, next) {
@@ -35,4 +33,44 @@ router.post('/', function(req, res, next) {
 		res.json(doc);
 	});
 });
+router.post('/search', function(req, res, next) {
+	var criteria = {};
+
+	if(req.body.startDate){
+		criteria.date = {"$gte":new Date(req.body.startDate)};
+	}
+
+	if(req.body.endDate){
+		criteria.date = {"$lte":new Date(req.body.endDate)};
+	}
+
+	//criteria.level = {$in:bdlevel};
+	if(req.body.keyword){
+		criteria.message = new RegExp(req.body.keyword);
+	}
+	mongoConnection.find(criteria,0,50,function(err,doc){
+		res.json(doc);
+	});
+});
+
+router.post('/choice', function(req, res, next) {
+	var criteria = {};
+
+	if(req.body.startDate){
+		criteria.date = {"$gte":new Date(req.body.startDate)};
+	}
+
+	if(req.body.endDate){
+		criteria.date = {"$lte":new Date(req.body.endDate)};
+	}
+
+	//criteria.level = {$in:bdlevel};
+	if(req.body.keyword){
+		criteria.message = new RegExp(req.body.keyword);
+	}
+	mongoConnection.find(criteria,0,50,function(err,doc){
+		res.json(doc);
+	});
+});
+
 module.exports = router;
