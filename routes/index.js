@@ -4,7 +4,6 @@ var mongoConnection = require('../service/MongoService');
 var moment = require('moment');
 var ejs = require('ejs');
 
-console.log(ejs);
 /*
 ejs.set('dateformat',function(obj,format){
 	if (format == undefined) {
@@ -36,41 +35,41 @@ router.post('/', function(req, res, next) {
 router.post('/search', function(req, res, next) {
 	var criteria = {};
 
-	if(req.body.startDate){
-		criteria.date = {"$gte":new Date(req.body.startDate)};
-	}
-
-	if(req.body.endDate){
-		criteria.date = {"$lte":new Date(req.body.endDate)};
+	if(req.body.daterange){
+		var start = new Date(req.body.daterange.replace(/-/g,'/'));
+		var dayTime = 1000*60*60*24;
+		var end = new Date(start.getTime()+dayTime);
+		criteria.date ={'$lt':end,'$gte':start};
 	}
 
 	//criteria.level = {$in:bdlevel};
 	if(req.body.keyword){
 		criteria.message = new RegExp(req.body.keyword);
 	}
-	mongoConnection.find(criteria,0,50,function(err,doc){
+	mongoConnection.findByPage(criteria,0,50,function(err,doc){
 		res.json(doc);
 	});
 });
 
 router.post('/through', function(req, res, next) {
 	var criteria = {};
-
-	if(req.body.startDate){
-		criteria.date = {"$gte":new Date(req.body.startDate)};
-	}
-
-	if(req.body.endDate){
-		criteria.date = {"$lte":new Date(req.body.endDate)};
-	}
-
-	//criteria.level = {$in:bdlevel};
-	if(req.body.keyword){
-		criteria.message = new RegExp(req.body.keyword);
-	}
-	mongoConnection.find(criteria,0,50,function(err,doc){
+	mongoConnection.findByPage(criteria,req.body.skip,req.body.limit,function(err,doc){
 		res.json(doc);
 	});
 });
+
+router.post('/count', function(req, res, next) {
+	var criteria = {};
+	mongoConnection.count(criteria,function(err,doc){
+		res.json({'count':doc});
+	});
+});
+
+router.post('/skip', function(req, res, next) {
+	mongoConnection.findSkip(req.body.objectId,function(err,doc){
+		res.json({'skip':doc});
+	});
+});
+
 
 module.exports = router;
