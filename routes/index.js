@@ -20,15 +20,12 @@ router.get('/', function(req, res, next) {
 	res.render('index');
 });
 
-router.post('/', function(req, res, next) {
+
+/* GET home page. */
+router.post('/get', function(req, res, next) {
 	var criteria = {};
-	
-	console.log(req.body.dataTime);
-	//criteria.level = {$in:bdlevel};
-	if(req.body.keyword){
-		criteria.message = new RegExp(req.body.keyword);
-	}
-	mongoConnection.find(criteria,0,50,function(err,doc){
+	mongoConnection.findByPageDesc(criteria,0,50,function(err,doc){
+		debugger;
 		res.json(doc);
 	});
 });

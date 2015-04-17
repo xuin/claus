@@ -18,80 +18,36 @@
       <script src="/javascripts/respond-1.4.2.min.js"></script>
     <![endif]-->
     <style type="text/css">
-      .search-item{
-        padding: 5px 10px;
-        cursor: pointer;
+     body{
+        word-break: break-all;
+        font-family: sans-serif;
+    /*    background-color: #2E2E2E;
+        color:#fff;*/
       }
-      .search-item:hover{
-        background-color: #f1f1f1;
+      #console li span{
+        margin-right: 15px;
       }
-      .preview{
-        padding: 5px 10px;
-      }
-
-      .btn-next,.btn-prev{
+      .log-thrown,.log-sthrown{
         display: block;
-        text-align: center;
-        height: 50px;
-        line-height: 50px;
-        display: none;
       }
-      .btn-next:hover{
-        background-color: #f8f8f8;
+      .log-sthrown{
+        margin-left: 50px;
       }
-      
+      p {
+        margin: 0px;
+      }
+      #console li{
+        padding: 5px 0;
+      }
     </style>
   </head>
   <body>
-    <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container">
-        <form action="/" method="post" class="form-horizontal">
-          <!--
-            <div class="form-group form-group-sm row">
-              <label class="col-sm-2 control-label" for="formGroupInputSmall">日志级别</label>
-              <div class="col-sm-5">
-                <label class="checkbox-inline">
-                  <input type="checkbox" id="inlineCheckbox1" value="DEBUG" name="level"/>DEBUG
-                </label>
-                <label class="checkbox-inline">
-                  <input type="checkbox" id="inlineCheckbox2" value="INFO" name="level">INFO
-                </label>
-                <label class="checkbox-inline">
-                  <input type="checkbox" id="inlineCheckbox3" value="WARN" name="level">WARN
-                </label>
-                <label class="checkbox-inline">
-                  <input type="checkbox" id="inlineCheckbox3" value="ERROR" name="level">ERROR
-                </label>
-                <label class="checkbox-inline">
-                  <input type="checkbox" id="inlineCheckbox4" value="FATAL" name="level">FATAL
-                </label>
-              </div>
-           </div>
-         -->
-          <div class="form-group form-group-sm row" style="margin-top:15px;">
-            <label class="col-sm-2 control-label" for="formGroupInputSmall">时间</label>
-            <div class="col-sm-5">
-              <input type="text" name="daterange" id="daterange" value="" class="form-control" />
-            </div>
-          </div>
-          <div class="form-group form-group-sm row">
-            <label class="col-sm-2 control-label" for="formGroupInputSmall">关键字</label>
-            <div class="col-sm-5">
-              <input class="form-control" type="text" name="keyword" id="keyword" placeholder="关键字">
-            </div>
-            <button type="button" id="btn-search" class="btn btn-primary col-sm-1">搜索</button>
-          </div>
-        </form>
+    <div class="row">
+      <div class="">
       </div>
-    </nav>
-    <div style="margin-top: 120px;"></div>
-    <div class="btn-prev">
-      <a  href="javascript:prev();">Prev</a>
     </div>
-    <ul id="logView" style="list-style: none;padding: 0;">
+    <ul id="console">
     </ul>
-    <div class="btn-next"><a href="javascript:next();">Next</a></div>
-  
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="/javascripts/jquery-1.11.1.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -99,8 +55,6 @@
     <script type="text/javascript" src="/daterangepicker/moment.min.js"></script>
     <script type="text/javascript" src="/daterangepicker/daterangepicker.js"></script>
     <script type="text/javascript">
-      var plan = 20;
-      var start_skip,end_skip;
 
       Date.prototype.Format = function (fmt) { //author: meizz 
           var o = {
@@ -118,109 +72,37 @@
           return fmt;
       }
 
-      function through(id){
-        $.post('/skip',{'objectId':id},function(data){
-          start_skip = data.skip - plan<0?0:data.skip - plan;
-          end_skip = data.skip+1;
-          $.post('/through',{'skip':start_skip,'limit':end_skip-start_skip},function(data){
-              $('#logView').empty();
-              $('#logView').append(buildHtml(data));
-
-              if(start_skip>0){
-                $('.btn-prev').show();
-              }
-              if(data.length > 0){
-                $('.btn-next').show();
-              }
-          });
-        });
-      }
-
-      function prev(){
-          if(start_skip>0){
-            var tmp = start_skip;
-            start_skip = start_skip - plan < 0 ? 0 : start_skip - plan;
-            $.post('/through',{'skip':start_skip,'limit':tmp-start_skip},function(data){
-              var html = buildHtml(data);
-              if($('#logView li:eq(0)').length==0){
-                    $('#logView').append(html);  
-                  }else{
-                    $(html).insertBefore($('#logView li:eq(0)'));
-                  }
-            if(start_skip==0){
-                $('.btn-prev').hide();
-              }
-            });
-          }
-          
-      }
-
-      function next(){
-        $.post('/count',function(data){
-          var max_skip = data.count;
-          if(end_skip<max_skip){
-            var tmp = end_skip;
-            end_skip = end_skip+plan>max_skip?max_skip:end_skip+plan;
-            $.post('/through',{'skip':tmp,'limit':end_skip-tmp},function(data){
-                  $('#logView').append(buildHtml(data));
-            });
-          }
-        });
-      }
-
-      function buildHtml(data){
-        var html='';
-        for(var i=0;i<data.length;i++){
-            var date = new Date(data[i].date);
-            var threadName = data[i].threadName;
-            var level = data[i].level;
-            var loggerName = data[i].loggerName;
-            var message = data[i].message;
-            html+='<li class="preview">'+date.Format('yyyy-MM-dd hh:mm:ss.S')+' ['+threadName+'] '+level+' ['+loggerName+'] - '+message+'</li>'
-        }
-        return html;
-      }
-
-
       $(function(){
-        $('#btn-search').on('click',function(){
-          var param = {
-            'keyword':$("#keyword").val(),
-            'daterange':$('#daterange').val()
-          }
-          $.post('/search',param,function(data){
-            $('#logView').empty();
-            var html='';
-            for(var i=0;i<data.length;i++){
-                var date = new Date(data[i].date);
-                var threadName = data[i].threadName;
-                var level = data[i].level;
-                var loggerName = data[i].loggerName;
-                var message = data[i].message;
-                html+='<li class="search-item" onclick="through(\''+data[i]._id+'\')">'+date.Format('yyyy-MM-dd hh:mm:ss.S')+' ['+threadName+'] '+level+' ['+loggerName+'] - '+message+'</li>'
+        $.post('/get',function(data){
+          for (var i = 0 ;i<data.length;i++) {
+            var item = '<li><p><span class="log-date">'+new Date(data[i].date).Format('yyyy-MM-dd hh:mm:ss.S')+'</span><span class="log-theadName">['+data[i].threadName+']</span><span class="log-level">'+data[i].level+'</span><span>'+data[i].loggerName+'</span><span>-</span><span>'+html_encode(data[i].message)+'</span></p>';
+            if(data[i].thrown){
+              var logThrown = data[i].thrown; 
+              var thrownHtml = '<p><span class="log-thrown">';
+              thrownHtml += '<span class="log-thrownType">Caused by: '+logThrown.type+'</span>';
+              thrownHtml += '<span class="log-thrownMessage">'+logThrown.message+'</span></span>';
+              for(var sti = 0 ; sti < logThrown.stackTrace.length;sti++){
+                  thrownHtml += '<span class="log-sthrown"><span class="log-stClassName">at: '+logThrown.stackTrace[sti].className+'#'+logThrown.stackTrace[sti].methodName+'</span>';      
+                  thrownHtml += '<span class="log-stFileName">'+logThrown.stackTrace[sti].fileName+':'+logThrown.stackTrace[sti].lineNumber+'</span></span>';     
+              }
+              thrownHtml += '</p>';
+              item+=thrownHtml;
             }
-            $('#logView').append(html);
-          });
-
-        });
-        /*
-        $('[data-toggle="popover"]').on('click',function(){
-          $(this).popover('toggle');  
-          return false;
-        });
-        $(document).on('click',function(){
-          $('[data-toggle="popover"]').popover('hide');
-          console.log(2);
-        });*/
-        $("input[type=checkbox]").on("click",function(){
-          $("form").submit();
-        });
-        $('input[name="daterange"]').daterangepicker({format:'YYYY-MM-DD',singleDatePicker: true},function(start,end){
-          $("#startDate").val();
-          $("#endDate").val();
+            $('#console').append(item+'</p>');
+          };
         });
       });
-      
+
+
+
+function html_encode(str) {
+    var s = "";
+    if (str.length == 0) return "";
+    s = str.replace(/</g, "&lt;");
+    s = s.replace(/>/g, "&gt;");
+    return s;
+  }
+
     </script>
   </body>
 </html>

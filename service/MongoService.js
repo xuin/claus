@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
-//mongoose.connect('mongodb://logdb:123456@172.16.230.184:30000/logdb');
-mongoose.connect('mongodb://127.0.0.1:27017/logdb');
+mongoose.connect('mongodb://logdb:123456@172.16.230.183:30000/logdb');
+//mongoose.connect('mongodb://127.0.0.1:27017/logdb');
 //var db = mongoose.createConnection('mongodb://logdb:123456@172.16.230.184:30000/logdb');
 
 //mongoose.connect('mongodb://127.0.0.1:27017/logdb');
@@ -16,7 +16,7 @@ var LogSchema = new Schema({
 	threadName:String,
 	millis:Number,
 	date:Date,
-	thrown:String,
+	thrown:{},
 	contextMap:{},
 	contextStack:[]
 });
@@ -57,6 +57,10 @@ var l1jj = new trident({
 l1jj.save();
 */
 
+exports.findByPageDesc = function(criteria,skip,limit,call){
+	criteria.date={'$gte':new Date("2015-04-01"),'$lt':new Date("2015-04-18")};
+	trident.find(criteria).skip(skip).limit(limit).sort({date:'asc'}).exec(call);
+};
 
 exports.findByPage = function(criteria,skip,limit,call){
 	trident.find(criteria).skip(skip).limit(limit).sort({date:'asc'}).exec(call);
@@ -89,7 +93,7 @@ exports.count = function(criteria,call){
 	trident.count(criteria).exec(call);
 };
 
-trident.find({}).skip(81).limit(19).sort({date:'asc'}).exec(function(err,doc){
+trident.find({}).skip(0).limit(1).sort({date:'asc'}).exec(function(err,doc){
 	console.log(doc)
 
 });

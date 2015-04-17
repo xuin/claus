@@ -1,0 +1,483 @@
+{
+  "_id" : ObjectId("5530672f24ac6d3ab8e5aa9b"),
+  "level" : "ERROR",
+  "loggerName" : "500.jsp",
+  "message" : null,
+  "source" : {
+    "className" : "org.apache.jsp.WEB_002dINF.views.error._500_jsp",
+    "methodName" : "_jspService",
+    "fileName" : "_500_jsp.java",
+    "lineNumber" : 83
+  },
+  "marker" : null,
+  "threadName" : "http-bio-8080-exec-43",
+  "millis" : NumberLong("1429235503000"),
+  "date" : ISODate("2015-04-17T01:51:43Z"),
+  "thrown" : {
+    "type" : "java.lang.NullPointerException",
+    "message" : null,
+    "stackTrace" : [{
+        "className" : "com.snowstore.poseidon.utilities.zip.ZipUtil",
+        "methodName" : "zipFile",
+        "fileName" : "ZipUtil.java",
+        "lineNumber" : 127
+      }, {
+        "className" : "com.snowstore.poseidon.controller.asset.OrderController",
+        "methodName" : "orderPdfBatchDownload",
+        "fileName" : "OrderController.java",
+        "lineNumber" : 268
+      }, {
+        "className" : "sun.reflect.NativeMethodAccessorImpl",
+        "methodName" : "invoke0",
+        "fileName" : "NativeMethodAccessorImpl.java",
+        "lineNumber" : -2
+      }, {
+        "className" : "sun.reflect.NativeMethodAccessorImpl",
+        "methodName" : "invoke",
+        "fileName" : "NativeMethodAccessorImpl.java",
+        "lineNumber" : 57
+      }, {
+        "className" : "sun.reflect.DelegatingMethodAccessorImpl",
+        "methodName" : "invoke",
+        "fileName" : "DelegatingMethodAccessorImpl.java",
+        "lineNumber" : 43
+      }, {
+        "className" : "java.lang.reflect.Method",
+        "methodName" : "invoke",
+        "fileName" : "Method.java",
+        "lineNumber" : 606
+      }, {
+        "className" : "org.springframework.web.method.support.InvocableHandlerMethod",
+        "methodName" : "invoke",
+        "fileName" : "InvocableHandlerMethod.java",
+        "lineNumber" : 215
+      }, {
+        "className" : "org.springframework.web.method.support.InvocableHandlerMethod",
+        "methodName" : "invokeForRequest",
+        "fileName" : "InvocableHandlerMethod.java",
+        "lineNumber" : 132
+      }, {
+        "className" : "org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod",
+        "methodName" : "invokeAndHandle",
+        "fileName" : "ServletInvocableHandlerMethod.java",
+        "lineNumber" : 104
+      }, {
+        "className" : "org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter",
+        "methodName" : "invokeHandleMethod",
+        "fileName" : "RequestMappingHandlerAdapter.java",
+        "lineNumber" : 749
+      }, {
+        "className" : "org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter",
+        "methodName" : "handleInternal",
+        "fileName" : "RequestMappingHandlerAdapter.java",
+        "lineNumber" : 690
+      }, {
+        "className" : "org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter",
+        "methodName" : "handle",
+        "fileName" : "AbstractHandlerMethodAdapter.java",
+        "lineNumber" : 83
+      }, {
+        "className" : "org.springframework.web.servlet.DispatcherServlet",
+        "methodName" : "doDispatch",
+        "fileName" : "DispatcherServlet.java",
+        "lineNumber" : 945
+      }, {
+        "className" : "org.springframework.web.servlet.DispatcherServlet",
+        "methodName" : "doService",
+        "fileName" : "DispatcherServlet.java",
+        "lineNumber" : 876
+      }, {
+        "className" : "org.springframework.web.servlet.FrameworkServlet",
+        "methodName" : "processRequest",
+        "fileName" : "FrameworkServlet.java",
+        "lineNumber" : 961
+      }, {
+        "className" : "org.springframework.web.servlet.FrameworkServlet",
+        "methodName" : "doGet",
+        "fileName" : "FrameworkServlet.java",
+        "lineNumber" : 852
+      }, {
+        "className" : "javax.servlet.http.HttpServlet",
+        "methodName" : "service",
+        "fileName" : "HttpServlet.java",
+        "lineNumber" : 620
+      }, {
+        "className" : "org.springframework.web.servlet.FrameworkServlet",
+        "methodName" : "service",
+        "fileName" : "FrameworkServlet.java",
+        "lineNumber" : 837
+      }, {
+        "className" : "javax.servlet.http.HttpServlet",
+        "methodName" : "service",
+        "fileName" : "HttpServlet.java",
+        "lineNumber" : 727
+      }, {
+        "className" : "org.apache.catalina.core.ApplicationFilterChain",
+        "methodName" : "internalDoFilter",
+        "fileName" : "ApplicationFilterChain.java",
+        "lineNumber" : 303
+      }, {
+        "className" : "org.apache.catalina.core.ApplicationFilterChain",
+        "methodName" : "doFilter",
+        "fileName" : "ApplicationFilterChain.java",
+        "lineNumber" : 208
+      }, {
+        "className" : "org.apache.tomcat.websocket.server.WsFilter",
+        "methodName" : "doFilter",
+        "fileName" : "WsFilter.java",
+        "lineNumber" : 52
+      }, {
+        "className" : "org.apache.catalina.core.ApplicationFilterChain",
+        "methodName" : "internalDoFilter",
+        "fileName" : "ApplicationFilterChain.java",
+        "lineNumber" : 241
+      }, {
+        "className" : "org.apache.catalina.core.ApplicationFilterChain",
+        "methodName" : "doFilter",
+        "fileName" : "ApplicationFilterChain.java",
+        "lineNumber" : 208
+      }, {
+        "className" : "com.opensymphony.sitemesh.webapp.SiteMeshFilter",
+        "methodName" : "obtainContent",
+        "fileName" : "SiteMeshFilter.java",
+        "lineNumber" : 129
+      }, {
+        "className" : "com.opensymphony.sitemesh.webapp.SiteMeshFilter",
+        "methodName" : "doFilter",
+        "fileName" : "SiteMeshFilter.java",
+        "lineNumber" : 77
+      }, {
+        "className" : "org.apache.catalina.core.ApplicationFilterChain",
+        "methodName" : "internalDoFilter",
+        "fileName" : "ApplicationFilterChain.java",
+        "lineNumber" : 241
+      }, {
+        "className" : "org.apache.catalina.core.ApplicationFilterChain",
+        "methodName" : "doFilter",
+        "fileName" : "ApplicationFilterChain.java",
+        "lineNumber" : 208
+      }, {
+        "className" : "org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter",
+        "methodName" : "doFilterInternal",
+        "fileName" : "OpenEntityManagerInViewFilter.java",
+        "lineNumber" : 177
+      }, {
+        "className" : "org.springframework.web.filter.OncePerRequestFilter",
+        "methodName" : "doFilter",
+        "fileName" : "OncePerRequestFilter.java",
+        "lineNumber" : 108
+      }, {
+        "className" : "org.apache.catalina.core.ApplicationFilterChain",
+        "methodName" : "internalDoFilter",
+        "fileName" : "ApplicationFilterChain.java",
+        "lineNumber" : 241
+      }, {
+        "className" : "org.apache.catalina.core.ApplicationFilterChain",
+        "methodName" : "doFilter",
+        "fileName" : "ApplicationFilterChain.java",
+        "lineNumber" : 208
+      }, {
+        "className" : "org.springframework.security.web.FilterChainProxy$VirtualFilterChain",
+        "methodName" : "doFilter",
+        "fileName" : "FilterChainProxy.java",
+        "lineNumber" : 330
+      }, {
+        "className" : "org.springframework.security.web.access.intercept.FilterSecurityInterceptor",
+        "methodName" : "invoke",
+        "fileName" : "FilterSecurityInterceptor.java",
+        "lineNumber" : 118
+      }, {
+        "className" : "org.springframework.security.web.access.intercept.FilterSecurityInterceptor",
+        "methodName" : "doFilter",
+        "fileName" : "FilterSecurityInterceptor.java",
+        "lineNumber" : 84
+      }, {
+        "className" : "org.springframework.security.web.FilterChainProxy$VirtualFilterChain",
+        "methodName" : "doFilter",
+        "fileName" : "FilterChainProxy.java",
+        "lineNumber" : 342
+      }, {
+        "className" : "org.springframework.security.web.access.ExceptionTranslationFilter",
+        "methodName" : "doFilter",
+        "fileName" : "ExceptionTranslationFilter.java",
+        "lineNumber" : 113
+      }, {
+        "className" : "org.springframework.security.web.FilterChainProxy$VirtualFilterChain",
+        "methodName" : "doFilter",
+        "fileName" : "FilterChainProxy.java",
+        "lineNumber" : 342
+      }, {
+        "className" : "org.springframework.security.web.session.SessionManagementFilter",
+        "methodName" : "doFilter",
+        "fileName" : "SessionManagementFilter.java",
+        "lineNumber" : 103
+      }, {
+        "className" : "org.springframework.security.web.FilterChainProxy$VirtualFilterChain",
+        "methodName" : "doFilter",
+        "fileName" : "FilterChainProxy.java",
+        "lineNumber" : 342
+      }, {
+        "className" : "org.springframework.security.web.authentication.AnonymousAuthenticationFilter",
+        "methodName" : "doFilter",
+        "fileName" : "AnonymousAuthenticationFilter.java",
+        "lineNumber" : 113
+      }, {
+        "className" : "org.springframework.security.web.FilterChainProxy$VirtualFilterChain",
+        "methodName" : "doFilter",
+        "fileName" : "FilterChainProxy.java",
+        "lineNumber" : 342
+      }, {
+        "className" : "org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter",
+        "methodName" : "doFilter",
+        "fileName" : "RememberMeAuthenticationFilter.java",
+        "lineNumber" : 146
+      }, {
+        "className" : "org.springframework.security.web.FilterChainProxy$VirtualFilterChain",
+        "methodName" : "doFilter",
+        "fileName" : "FilterChainProxy.java",
+        "lineNumber" : 342
+      }, {
+        "className" : "org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter",
+        "methodName" : "doFilter",
+        "fileName" : "SecurityContextHolderAwareRequestFilter.java",
+        "lineNumber" : 154
+      }, {
+        "className" : "org.springframework.security.web.FilterChainProxy$VirtualFilterChain",
+        "methodName" : "doFilter",
+        "fileName" : "FilterChainProxy.java",
+        "lineNumber" : 342
+      }, {
+        "className" : "org.springframework.security.web.savedrequest.RequestCacheAwareFilter",
+        "methodName" : "doFilter",
+        "fileName" : "RequestCacheAwareFilter.java",
+        "lineNumber" : 45
+      }, {
+        "className" : "org.springframework.security.web.FilterChainProxy$VirtualFilterChain",
+        "methodName" : "doFilter",
+        "fileName" : "FilterChainProxy.java",
+        "lineNumber" : 342
+      }, {
+        "className" : "org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter",
+        "methodName" : "doFilter",
+        "fileName" : "AbstractAuthenticationProcessingFilter.java",
+        "lineNumber" : 199
+      }, {
+        "className" : "org.springframework.security.web.FilterChainProxy$VirtualFilterChain",
+        "methodName" : "doFilter",
+        "fileName" : "FilterChainProxy.java",
+        "lineNumber" : 342
+      }, {
+        "className" : "org.springframework.security.web.authentication.logout.LogoutFilter",
+        "methodName" : "doFilter",
+        "fileName" : "LogoutFilter.java",
+        "lineNumber" : 110
+      }, {
+        "className" : "org.springframework.security.web.FilterChainProxy$VirtualFilterChain",
+        "methodName" : "doFilter",
+        "fileName" : "FilterChainProxy.java",
+        "lineNumber" : 342
+      }, {
+        "className" : "org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter",
+        "methodName" : "doFilterInternal",
+        "fileName" : "WebAsyncManagerIntegrationFilter.java",
+        "lineNumber" : 50
+      }, {
+        "className" : "org.springframework.web.filter.OncePerRequestFilter",
+        "methodName" : "doFilter",
+        "fileName" : "OncePerRequestFilter.java",
+        "lineNumber" : 108
+      }, {
+        "className" : "org.springframework.security.web.FilterChainProxy$VirtualFilterChain",
+        "methodName" : "doFilter",
+        "fileName" : "FilterChainProxy.java",
+        "lineNumber" : 342
+      }, {
+        "className" : "org.springframework.security.web.session.ConcurrentSessionFilter",
+        "methodName" : "doFilter",
+        "fileName" : "ConcurrentSessionFilter.java",
+        "lineNumber" : 125
+      }, {
+        "className" : "org.springframework.security.web.FilterChainProxy$VirtualFilterChain",
+        "methodName" : "doFilter",
+        "fileName" : "FilterChainProxy.java",
+        "lineNumber" : 342
+      }, {
+        "className" : "org.springframework.security.web.context.SecurityContextPersistenceFilter",
+        "methodName" : "doFilter",
+        "fileName" : "SecurityContextPersistenceFilter.java",
+        "lineNumber" : 87
+      }, {
+        "className" : "org.springframework.security.web.FilterChainProxy$VirtualFilterChain",
+        "methodName" : "doFilter",
+        "fileName" : "FilterChainProxy.java",
+        "lineNumber" : 342
+      }, {
+        "className" : "org.springframework.security.web.FilterChainProxy",
+        "methodName" : "doFilterInternal",
+        "fileName" : "FilterChainProxy.java",
+        "lineNumber" : 192
+      }, {
+        "className" : "org.springframework.security.web.FilterChainProxy",
+        "methodName" : "doFilter",
+        "fileName" : "FilterChainProxy.java",
+        "lineNumber" : 160
+      }, {
+        "className" : "org.springframework.web.filter.DelegatingFilterProxy",
+        "methodName" : "invokeDelegate",
+        "fileName" : "DelegatingFilterProxy.java",
+        "lineNumber" : 344
+      }, {
+        "className" : "org.springframework.web.filter.DelegatingFilterProxy",
+        "methodName" : "doFilter",
+        "fileName" : "DelegatingFilterProxy.java",
+        "lineNumber" : 261
+      }, {
+        "className" : "org.apache.catalina.core.ApplicationFilterChain",
+        "methodName" : "internalDoFilter",
+        "fileName" : "ApplicationFilterChain.java",
+        "lineNumber" : 241
+      }, {
+        "className" : "org.apache.catalina.core.ApplicationFilterChain",
+        "methodName" : "doFilter",
+        "fileName" : "ApplicationFilterChain.java",
+        "lineNumber" : 208
+      }, {
+        "className" : "org.springframework.web.filter.CharacterEncodingFilter",
+        "methodName" : "doFilterInternal",
+        "fileName" : "CharacterEncodingFilter.java",
+        "lineNumber" : 88
+      }, {
+        "className" : "org.springframework.web.filter.OncePerRequestFilter",
+        "methodName" : "doFilter",
+        "fileName" : "OncePerRequestFilter.java",
+        "lineNumber" : 108
+      }, {
+        "className" : "org.apache.catalina.core.ApplicationFilterChain",
+        "methodName" : "internalDoFilter",
+        "fileName" : "ApplicationFilterChain.java",
+        "lineNumber" : 241
+      }, {
+        "className" : "org.apache.catalina.core.ApplicationFilterChain",
+        "methodName" : "doFilter",
+        "fileName" : "ApplicationFilterChain.java",
+        "lineNumber" : 208
+      }, {
+        "className" : "org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter",
+        "methodName" : "doFilterInternal",
+        "fileName" : "OpenEntityManagerInViewFilter.java",
+        "lineNumber" : 177
+      }, {
+        "className" : "org.springframework.web.filter.OncePerRequestFilter",
+        "methodName" : "doFilter",
+        "fileName" : "OncePerRequestFilter.java",
+        "lineNumber" : 108
+      }, {
+        "className" : "org.apache.catalina.core.ApplicationFilterChain",
+        "methodName" : "internalDoFilter",
+        "fileName" : "ApplicationFilterChain.java",
+        "lineNumber" : 241
+      }, {
+        "className" : "org.apache.catalina.core.ApplicationFilterChain",
+        "methodName" : "doFilter",
+        "fileName" : "ApplicationFilterChain.java",
+        "lineNumber" : 208
+      }, {
+        "className" : "org.apache.catalina.filters.RemoteIpFilter",
+        "methodName" : "doFilter",
+        "fileName" : "RemoteIpFilter.java",
+        "lineNumber" : 834
+      }, {
+        "className" : "org.apache.catalina.filters.RemoteIpFilter",
+        "methodName" : "doFilter",
+        "fileName" : "RemoteIpFilter.java",
+        "lineNumber" : 870
+      }, {
+        "className" : "org.apache.catalina.core.ApplicationFilterChain",
+        "methodName" : "internalDoFilter",
+        "fileName" : "ApplicationFilterChain.java",
+        "lineNumber" : 241
+      }, {
+        "className" : "org.apache.catalina.core.ApplicationFilterChain",
+        "methodName" : "doFilter",
+        "fileName" : "ApplicationFilterChain.java",
+        "lineNumber" : 208
+      }, {
+        "className" : "org.apache.catalina.core.StandardWrapperValve",
+        "methodName" : "invoke",
+        "fileName" : "StandardWrapperValve.java",
+        "lineNumber" : 220
+      }, {
+        "className" : "org.apache.catalina.core.StandardContextValve",
+        "methodName" : "invoke",
+        "fileName" : "StandardContextValve.java",
+        "lineNumber" : 122
+      }, {
+        "className" : "org.apache.catalina.authenticator.AuthenticatorBase",
+        "methodName" : "invoke",
+        "fileName" : "AuthenticatorBase.java",
+        "lineNumber" : 501
+      }, {
+        "className" : "org.apache.catalina.core.StandardHostValve",
+        "methodName" : "invoke",
+        "fileName" : "StandardHostValve.java",
+        "lineNumber" : 171
+      }, {
+        "className" : "org.apache.catalina.valves.ErrorReportValve",
+        "methodName" : "invoke",
+        "fileName" : "ErrorReportValve.java",
+        "lineNumber" : 102
+      }, {
+        "className" : "org.apache.catalina.valves.AccessLogValve",
+        "methodName" : "invoke",
+        "fileName" : "AccessLogValve.java",
+        "lineNumber" : 950
+      }, {
+        "className" : "org.apache.catalina.core.StandardEngineValve",
+        "methodName" : "invoke",
+        "fileName" : "StandardEngineValve.java",
+        "lineNumber" : 116
+      }, {
+        "className" : "org.apache.catalina.connector.CoyoteAdapter",
+        "methodName" : "service",
+        "fileName" : "CoyoteAdapter.java",
+        "lineNumber" : 408
+      }, {
+        "className" : "org.apache.coyote.http11.AbstractHttp11Processor",
+        "methodName" : "process",
+        "fileName" : "AbstractHttp11Processor.java",
+        "lineNumber" : 1040
+      }, {
+        "className" : "org.apache.coyote.AbstractProtocol$AbstractConnectionHandler",
+        "methodName" : "process",
+        "fileName" : "AbstractProtocol.java",
+        "lineNumber" : 607
+      }, {
+        "className" : "org.apache.tomcat.util.net.JIoEndpoint$SocketProcessor",
+        "methodName" : "run",
+        "fileName" : "JIoEndpoint.java",
+        "lineNumber" : 316
+      }, {
+        "className" : "java.util.concurrent.ThreadPoolExecutor",
+        "methodName" : "runWorker",
+        "fileName" : "ThreadPoolExecutor.java",
+        "lineNumber" : 1145
+      }, {
+        "className" : "java.util.concurrent.ThreadPoolExecutor$Worker",
+        "methodName" : "run",
+        "fileName" : "ThreadPoolExecutor.java",
+        "lineNumber" : 615
+      }, {
+        "className" : "org.apache.tomcat.util.threads.TaskThread$WrappingRunnable",
+        "methodName" : "run",
+        "fileName" : "TaskThread.java",
+        "lineNumber" : 61
+      }, {
+        "className" : "java.lang.Thread",
+        "methodName" : "run",
+        "fileName" : "Thread.java",
+        "lineNumber" : 744
+      }]
+  },
+  "contextMap" : { },
+  "contextStack" : []
+}
