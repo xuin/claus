@@ -25,35 +25,52 @@ router.get('/', function(req, res, next) {
 router.post('/get', function(req, res, next) {
 	var criteria = {};
 	mongoConnection.findByPageDesc(criteria,0,50,function(err,doc){
-		debugger;
 		res.json(doc);
 	});
 });
+
 router.post('/search', function(req, res, next) {
 	var criteria = {};
-
-	if(req.body.daterange){
-		var start = new Date(req.body.daterange.replace(/-/g,'/'));
-		var dayTime = 1000*60*60*24;
-		var end = new Date(start.getTime()+dayTime);
-		criteria.date ={'$lt':end,'$gte':start};
-	}
-
+	criteria.date={'$gte':new Date("2015-04-01"),'$lt':new Date("2015-04-18")};
 	//criteria.level = {$in:bdlevel};
 	if(req.body.keyword){
 		criteria.message = new RegExp(req.body.keyword);
 	}
-	mongoConnection.findByPage(criteria,0,50,function(err,doc){
+	mongoConnection.findByPageAsc(criteria,0,50,function(err,doc){
 		res.json(doc);
 	});
 });
 
+
 router.post('/through', function(req, res, next) {
 	var criteria = {};
-	mongoConnection.findByPage(criteria,req.body.skip,req.body.limit,function(err,doc){
+	criteria.date={'$gte':new Date("2015-04-01"),'$lt':new Date(req.body.logDate)};
+	criteria._id = {'$ne':req.body.logId}
+	mongoConnection.findByPageDesc(criteria,req.body.skip,req.body.limit,function(err,doc){
 		res.json(doc);
 	});
 });
+
+
+router.post('/through-prev', function(req, res, next) {
+	var criteria = {};
+	criteria.date={'$gte':new Date("2015-04-01"),'$lt':new Date(req.body.logDate)};
+	criteria._id = {'$ne':req.body.logId}
+	mongoConnection.findByPageDesc(criteria,req.body.skip,req.body.limit,function(err,doc){
+		res.json(doc);
+	});
+});
+
+
+router.post('/through-next', function(req, res, next) {
+	var criteria = {};
+	criteria.date={'$gte':new Date(req.body.logDate),'$lt':new Date("2015-04-18")};
+	criteria._id = {'$ne':req.body.logId}
+	mongoConnection.findByPageAsc(criteria,req.body.skip,req.body.limit,function(err,doc){
+		res.json(doc);
+	});
+});
+
 
 router.post('/count', function(req, res, next) {
 	var criteria = {};

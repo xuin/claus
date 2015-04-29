@@ -58,7 +58,10 @@ l1jj.save();
 */
 
 exports.findByPageDesc = function(criteria,skip,limit,call){
-	criteria.date={'$gte':new Date("2015-04-01"),'$lt':new Date("2015-04-18")};
+	trident.find(criteria).skip(skip).limit(limit).sort({date:'desc'}).exec(call);
+};
+
+exports.findByPageAsc = function(criteria,skip,limit,call){
 	trident.find(criteria).skip(skip).limit(limit).sort({date:'asc'}).exec(call);
 };
 

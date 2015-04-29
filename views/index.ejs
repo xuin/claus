@@ -24,7 +24,7 @@
     /*    background-color: #2E2E2E;
         color:#fff;*/
       }
-      #console li span{
+      #console li span,#console-search li span{
         margin-right: 15px;
       }
       .log-thrown,.log-sthrown{
@@ -36,8 +36,13 @@
       p {
         margin: 0px;
       }
-      #console li{
+      #console li,#console-search li{
         padding: 5px 0;
+      }
+
+      #console-search li span.keyword-mark{
+        margin: 0px;
+        background: red;
       }
     </style>
   </head>
@@ -46,8 +51,11 @@
       <div class="">
       </div>
     </div>
+    <ul id="console-search">
+    </ul>
     <ul id="console">
     </ul>
+
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="/javascripts/jquery-1.11.1.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -55,7 +63,6 @@
     <script type="text/javascript" src="/daterangepicker/moment.min.js"></script>
     <script type="text/javascript" src="/daterangepicker/daterangepicker.js"></script>
     <script type="text/javascript">
-
       Date.prototype.Format = function (fmt) { //author: meizz 
           var o = {
               "M+": this.getMonth() + 1, //月份 
@@ -71,37 +78,76 @@
           if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
           return fmt;
       }
+      var keyword = '01000001';
+      var pskip=0,nskip=0,limit=100;
+
 
       $(function(){
-        $.post('/get',function(data){
-          for (var i = 0 ;i<data.length;i++) {
-            var item = '<li><p><span class="log-date">'+new Date(data[i].date).Format('yyyy-MM-dd hh:mm:ss.S')+'</span><span class="log-theadName">['+data[i].threadName+']</span><span class="log-level">'+data[i].level+'</span><span>'+data[i].loggerName+'</span><span>-</span><span>'+html_encode(data[i].message)+'</span></p>';
-            if(data[i].thrown){
-              var logThrown = data[i].thrown; 
-              var thrownHtml = '<p><span class="log-thrown">';
-              thrownHtml += '<span class="log-thrownType">Caused by: '+logThrown.type+'</span>';
-              thrownHtml += '<span class="log-thrownMessage">'+logThrown.message+'</span></span>';
-              for(var sti = 0 ; sti < logThrown.stackTrace.length;sti++){
-                  thrownHtml += '<span class="log-sthrown"><span class="log-stClassName">at: '+logThrown.stackTrace[sti].className+'#'+logThrown.stackTrace[sti].methodName+'</span>';      
-                  thrownHtml += '<span class="log-stFileName">'+logThrown.stackTrace[sti].fileName+':'+logThrown.stackTrace[sti].lineNumber+'</span></span>';     
-              }
-              thrownHtml += '</p>';
-              item+=thrownHtml;
-            }
-            $('#console').append(item+'</p>');
-          };
+        $.post('/search',{'keyword':keyword},function(data){
+            $('#console-search').append(html_format(data));
+        });
+        
+        $('#console-search').delegate('li','click',function(){
+          $('#console').empty();
+          $('#console').append($(this).clone());
+           var logId = $(this).attr('log-id');
+           var logDate = $(this).attr('log-date');
+           $.post('/through-prev',{'logId':logId,'logDate':logDate,'skip':pskip,'limit':limit},function(data){
+                $('#console').prepend(html_format(data,'desc'));
+                $.post('/through-next',{'logId':logId,'logDate':logDate,'skip':nskip,'limit':limit},function(data){
+                  $('#console').append(html_format(data));
+               });
+           });
+           
+           $('#console').show();
+           $('#console-search').hide();
+        });
+
+
+
+        $(window).on('scroll',function(){
+          
         });
       });
+      
 
+      function html_format(data,sort){
+         var htmlFrament = '';
+         for (var i = 0 ;i<data.length;i++) {
+              var item = '<li log-id = "'+data[i]._id+'" log-date="'+data[i].date+'"><p><span class="log-date">'+new Date(data[i].date).Format('yyyy-MM-dd hh:mm:ss.S')+'</span><span class="log-theadName">['+data[i].threadName+']</span><span class="log-level">'+data[i].level+'</span><span>'+data[i].loggerName+'</span><span>-</span><span>'+html_extrude(html_encode(data[i].message),keyword)+'</span></p>';
+              if(data[i].thrown){
+                var logThrown = data[i].thrown; 
+                var thrownHtml = '<p><span class="log-thrown">';
+                thrownHtml += '<span class="log-thrownType">Caused by: '+logThrown.type+'</span>';
+                thrownHtml += '<span class="log-thrownMessage">'+logThrown.message+'</span></span>';
+                for(var sti = 0 ; sti < logThrown.stackTrace.length;sti++){
+                    thrownHtml += '<span class="log-sthrown"><span class="log-stClassName">at: '+logThrown.stackTrace[sti].className+'#'+logThrown.stackTrace[sti].methodName+'</span>';      
+                    thrownHtml += '<span class="log-stFileName">'+logThrown.stackTrace[sti].fileName+':'+logThrown.stackTrace[sti].lineNumber+'</span></span>';     
+                }
+                thrownHtml += '</p>';
+                item+=thrownHtml;
+              }
+              if(sort=='desc'){
+                htmlFrament=(item+'</li>')+htmlFrament;  
+              }else{
+                htmlFrament=htmlFrament+(item+'</li>');  
+              }
+              
+            };
+        return htmlFrament;
+      }
 
+      function html_encode(str) {
+          var s = "";
+          if (str.length == 0) return "";
+          s = str.replace(/</g, "&lt;");
+          s = s.replace(/>/g, "&gt;");
+          return s;
+      }
 
-function html_encode(str) {
-    var s = "";
-    if (str.length == 0) return "";
-    s = str.replace(/</g, "&lt;");
-    s = s.replace(/>/g, "&gt;");
-    return s;
-  }
+      function html_extrude(str,keyword) {
+          return str.replace(new RegExp(keyword), '<span class="keyword-mark">'+keyword+'</span>');
+      }
 
     </script>
   </body>
